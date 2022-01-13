@@ -1,0 +1,8 @@
+.user-infoBox {
+  width: 200px;
+  line-height: 70px;
+  text-align: center;
+  /* 文本不可选 */
+  user-select: none;
+  border-bottom: 1px solid #23262e;
+}
