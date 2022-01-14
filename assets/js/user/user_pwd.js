@@ -7,7 +7,7 @@ $(function () {
   let layer = layui.layer;
 
 
-  // 验证表单，用户名称
+  // 验证表单，密码校验
   form.verify({
     pwd: [/^[\S]{6,12}$/, '密码密必须是6~16位，且不能出现空格'],
     samePwd: function (value) {
