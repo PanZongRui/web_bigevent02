@@ -1,8 +1,67 @@
+/* 图片头像样式 */
+
 .user-infoBox {
   width: 200px;
-  line-height: 70px;
+  line-height: 60px;
   text-align: center;
   /* 文本不可选 */
   user-select: none;
+}
+
+.user-infoBox img {
+  width: 40px;
+  height: 40px;
+  vertical-align: middle;
+}
+
+.layui-side-scroll .user-infoBox{
+  line-height: 69px;
   border-bottom: 1px solid #23262e;
+}
+
+/* 文字头像样式 */
+
+.text-avatar {
+  position: relative;
+  top: 3px;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  background-color: #009688;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 40px;
+  font-size: 20px;
+  color: #fff !important;
+  
+}
+
+/* 字体图标间距 */
+
+.iconfont {
+  margin-right: 8px;
+}
+
+.layui-icon{
+  margin-right: 8px;
+  margin-left: 8px;
+}
+
+/* iframe  的样式 */
+iframe {
+  width: 100%;
+  height: 100%;
+}
+
+/* 网页主题溢出隐藏 */
+
+.layui-body {
+  overflow: hidden;
+}
+
+/* 强制清楚 <a> 链接 CSS3 动画 */
+
+a {
+  transition: none !important;
 }
