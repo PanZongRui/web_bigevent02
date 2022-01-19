@@ -121,7 +121,7 @@ $(function () {
   }
 
   // 删除文章分类------------------
-  // 为编辑按钮绑定点击事件
+  // 为删除按钮绑定点击事件
   $('tbody').on('click', '.btn-delete', function () {
 
     // 获取当前页删除按钮的个数
@@ -155,6 +155,23 @@ $(function () {
       })
     });
   })
+
+
+
+  // 编辑文章分类------------------
+  // 为编辑按钮绑定点击事件
+  $('tbody').on('click', '.btn-edit', function () {
+    // 获取id值
+    let id = $(this).attr('data-id');
+
+    let art_edit = window.parent.document.querySelector('#art_edit');
+    $(art_edit).prop('href', `/article/art_edit.html?id=${id}`);
+    art_edit.click();
+    $(art_edit).prop('href', `/article/art_edit.html`);
+  })
+
+
+
 
 
 })

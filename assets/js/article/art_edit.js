@@ -1,5 +1,39 @@
 $(function () {
 
+  // 初始化富文本域
+  initEditor();
+  // 获取要修改文章的id值
+  let url_location = location.href;
+  // 获取要修改文章的内容
+  function initArticle(id) {
+    $.ajax({
+      method: 'GET',
+      url: '/my/article/' + id,
+      success: function (res) {
+        console.log(res);
+        layui.form.val('edit', {
+          Id: res.data.Id,
+          title: res.data.title,
+          cate_id: res.data.cate_id,
+          state: res.data.state,
+          content: res.data.content,
+          // Id: res.data.Id,
+        })
+      }
+    });
+
+  }
+  if (url_location.indexOf('?') !== -1) {
+    let idStr = url_location.slice(url_location.indexOf('?') + 1);
+    let params = new URLSearchParams(idStr);
+    let id = params.get('id');
+    console.log(id);
+    initArticle(id);
+
+  } else {
+    window.parent.document.querySelector('#art_list').click();
+  }
+
   // 定义加载文章分类的方法
   function initCate() {
     $.ajax({
@@ -18,9 +52,6 @@ $(function () {
   }
   initCate();
 
-  // 初始化富文本域
-  initEditor();
-
   // 点击选择按钮，触发文件选择框、
   $('#btnChooseImage').on('click', function () {
     $('#coveFile').click();
@@ -31,7 +62,7 @@ $(function () {
 
   // 2. 裁剪选项
   let options = {
-    aspectRatio: 1,
+    // aspectRatio: 1,
     preview: '.img-preview'
   }
 
@@ -55,28 +86,12 @@ $(function () {
   })
 
 
-  // 定义文章发布状态
-  let data = {
-    art_state: '',
-  }
-
-  // 点击 存为草稿 按钮，将发布状态改为  草稿
-  $('#btnSave2').on('click', function () {
-    data.art_state = '草稿';
-  })
-  // 点击 发布 按钮，将发布状态改为  已发布
-  $('#btnSave1').on('click', function () {
-    data.art_state = '已发布';
-  })
-
   // 为 form  表单添加点击事件 
-  $('#form-pub').submit(function (e) {
+  $('#form-edit').submit(function (e) {
     // 1. 阻止表单默认事件
     e.preventDefault();
     // 2. 获取表单的值
     let formVal = new FormData(this);
-    // 3. 将发布动态存到 formVal
-    formVal.append('state', data.art_state)
     // 将封面裁剪过后的文件转化为文件对象
     $image
       .cropper('getCroppedCanvas', {
@@ -89,32 +104,29 @@ $(function () {
         // 得到文件对象后，进行后续的操作
         // 5. 将得到的图片(文章封面)  blob  添加到  formVal
         formVal.append('cover_img', blob);
+
         // 6. 发起  ajax 请求
         pubLishArticle(formVal)
       });
+    id = null;
+    console.log(id);
   })
 
-  // 发起 Ajax 请求实现发布文章的功能
+  // 发起 Ajax 请求实现修改文章的功能
   function pubLishArticle(formVal) {
     $.ajax({
       method: 'POST',
-      url: '/my/article/add',
+      url: '/my/article/edit',
       data: formVal,
-      // 注意：如果向服务器提交的是 FormData 格式的数据，
-      // 必须添加以下两个配置项
       contentType: false,
       processData: false,
-
       success: function (res) {
         if (res.status !== 0) {
           return layui.layer.msg(res.message);
         }
-        layui.layer.msg(res.message);
-
-        // 发布成功跳转到文章列表页面
-        // location.href = '/article/art_list.html'
-        window.parent.document.querySelector('#art_list').click();;
+        window.parent.document.querySelector('#art_list').click();
       }
-    })
+    });
   }
+
 })

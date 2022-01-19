@@ -12,36 +12,45 @@
   <!-- 导入 cropper.css -->
   <link rel="stylesheet" href="/assets/lib/cropper/cropper.css">
   <!-- 导入 art_list.css  -->
-  <link rel="stylesheet" href="/assets/css/article/art_pub.css">
+  <link rel="stylesheet" href="/assets/css/article/art_edit.css">
 </head>
 
 <body>
 
   <div class="layui-card">
-    <div class="layui-card-header">写文章</div>
-    <div class="layui-card-body">
+    <div class="layui-card-header">修改文章</div>
+    <div class="layui-card-body" id="layui-card-body">
 
-      <!-- 发布文章的表单 -->
-      <form class="layui-form" id="form-pub">
+      <!-- 修改文章的表单 -->
+      <form class="layui-form" id="form-edit" lay-filter="edit">
+        <input type="hidden" name="Id" value="">
         <!-- 文章标题 -->
         <div class="layui-form-item">
           <label class="layui-form-label">文章标题</label>
           <div class="layui-input-block">
-            <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off"
-              class="layui-input">
+            <input type="text" name="title" readonly required lay-verify="required" placeholder="请输入标题"
+              autocomplete="off" class="layui-input" value="">
           </div>
         </div>
-
         <!-- 文章类别 -->
         <div class="layui-form-item">
           <label class="layui-form-label">文章类别</label>
           <div class="layui-input-block">
-            <select name="cate_id" lay-verify="required">
+            <select name="cate_id" lay-verify="required" value="">
             </select>
           </div>
         </div>
-
-
+        <!-- 发布状态 -->
+        <div class="layui-form-item">
+          <label class="layui-form-label">发布状态</label>
+          <div class="layui-input-block">
+            <select name="state" lay-verify="required" value="">
+              <option value="">发布状态</option>
+              <option value="已发布">已发布</option>
+              <option value="草稿">草稿</option>
+            </select>
+          </div>
+        </div>
         <!-- 富文本编辑区 -->
         <div class="layui-form-item">
           <!-- 左侧的 label -->
@@ -52,7 +61,6 @@
             <textarea name="content" id="mytextarea"></textarea>
           </div>
         </div>
-
         <!-- 图片裁剪区 -->
         <div class="layui-form-item">
           <!-- 左侧的 label -->
@@ -62,7 +70,7 @@
             <!-- 左侧裁剪区域 -->
 
             <div class="cover-left">
-              <img id="image" src="" alt="" />
+              <img id="image" src="/assets/images/sample.jpg" alt="" />
             </div>
             <!-- 右侧预览区域和选择封面区域 -->
             <div class="cover-right">
@@ -74,17 +82,13 @@
             </div>
           </div>
         </div>
-
-        <!-- 发布,与存为草稿 -->
+        <!-- 修改按钮 -->
         <div class="layui-form-item">
           <div class="layui-input-block">
-            <button class="layui-btn" lay-submit lay-filter="formDemo" id="btnSave1">发布</button>
-            <button lay-submit class="layui-btn layui-btn-primary" id="btnSave2">存为草稿</button>
+            <button class="layui-btn" lay-submit lay-filter="formDemo" id="revise">修改</button>
           </div>
         </div>
-
       </form>
-
     </div>
   </div>
 
@@ -96,7 +100,6 @@
     <option value="{{$value.Id}}">{{$value.name}}</option>
     {{/each}}
   </script>
-
 
   <!-- 导入第三方的js插件 -->
   <script src="/assets/lib/layui/layui.all.js"></script>
@@ -113,7 +116,7 @@
   <script src="/assets/lib/cropper/jquery-cropper.js"></script>
 
   <!-- 导入 art_list.js-->
-  <script src="/assets/js/article/art_pub.js"></script>
+  <script src="/assets/js/article/art_edit.js"></script>
 </body>
 
 </html>
